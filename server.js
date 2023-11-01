@@ -1,3 +1,5 @@
+const fs = require('fs');
+const path = require('path');
 const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -16,14 +18,16 @@ app.get('/api/notes', (req, res) => {
 
 // POST: /api/notes
 app.post('/api/notes', (req, res) => {
-    const { title, text } = req.body
-    if (title && text) {
-        const newNote = {
-            title,
-            text
+    const notes = require('./db/db.json');
+    notes.push(req.body)
+    fs.writeFile('./db/db.json', JSON.stringify(notes, null, 2), err =>{
+        if (err) {
+            console.log(err)
+        } else {
+            console.log('Note Saved!');
+            res.status(201).end();
         }
-    }
-    res.status(201).end();
+    })
 })
 
 // GET: Wildcard 
