@@ -1,10 +1,11 @@
+const fs = require('fs');
 const router = require('express').Router();
-const { readAndRemove } = require('../helpers/fsUtils');
+const { readAndRemove, readFromFile } = require('../helpers/fsUtils');
+const uuid = require('../helpers/uuid');
 
 // GET: /api/notes
 router.get('/notes', (req, res) => {
-    const notes = require('../db/db.json')
-    res.json(notes)
+    readFromFile('./db/db.json').then(data => res.json(JSON.parse(data)));
 });
 
 // POST: /api/notes
@@ -13,9 +14,9 @@ router.post('/notes', (req, res) => {
     if (title && text) {
         const newNote = {
             title,
-            text
+            text,
+            id: uuid()
         };
-        const recentNote = JSON.stringify(newNote);
         const note = require('../db/db.json');
         note.push(newNote);
 
@@ -28,11 +29,7 @@ router.post('/notes', (req, res) => {
             }
         })
 
-        // const noteMade = {
-        //     newNote
-        //   };
-
-        //   res.status(201).json(noteMade);
+        
     } else {
         console.log('Error adding note');
         res.status(500).end();
@@ -40,8 +37,9 @@ router.post('/notes', (req, res) => {
 });
 
 router.delete('/notes/:id', (req, res) => {
+    console.log(req.params.id);
     readAndRemove(req.params.id, './db/db.json');
-    res.status(204).end();
+    res.status(200).json('good');
 })
 
 module.exports = router;
