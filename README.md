@@ -26,7 +26,9 @@ npm run dev or npm run start
 If you would like to contribute to the application, feel free to fork the main branch and add your new code to the new branch.
 
 ## Example
-
+![Home Page](<Screen Shot 2023-11-06 at 7.43.00 PM.png>)
+![Blank Note Page](<Screen Shot 2023-11-06 at 7.43.31 PM.png>)
+![Notes on page](<Screen Shot 2023-11-06 at 7.44.38 PM.png>)
 
 ## Contact
 -   Github: https://github.com/Clyderitchie
